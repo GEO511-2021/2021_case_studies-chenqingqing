@@ -3,6 +3,12 @@
 ## Overview
 This template repository is set up to hold the semester's case study assignments for GEO511. 
 
+## Assignments 
+The detailed steps submitted for each assignments can be found in: 
+
+  - [week_01/case_study_01.Rmd](week_01/case_study_01.md): Your first script
+  - [week_02/case_study_02.Rmd](week_02/case_study_02.md): My grandfather says summers are getting hotter
+
 ## Recommendations
 
 ### Do
