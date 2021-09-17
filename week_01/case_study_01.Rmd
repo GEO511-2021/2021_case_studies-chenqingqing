@@ -1,9 +1,8 @@
 ---
 title: "Case Study 01: Your first script"
 author: "Qingqing Chen"
-date: "Last compiled on `r format(Sys.time(), '%d %B, %Y')`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: github_document
-# rmdformats::readthedown
 editor_options: 
   chunk_output_type: console
 ---

@@ -1,7 +1,7 @@
 Case Study 01: Your first script
 ================
 Qingqing Chen
-Last compiled on 17 September, 2021
+17 September, 2021
 
 ## Load data
 
