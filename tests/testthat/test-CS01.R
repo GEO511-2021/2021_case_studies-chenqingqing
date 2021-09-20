@@ -1,5 +1,22 @@
-base_url="https://raw.githubusercontent.com/AdamWilsonLabEDU/GEO511_tests/master/"
-test_url=paste0(base_url,"test-CS01.R")
+# base_url="https://raw.githubusercontent.com/AdamWilsonLabEDU/GEO511_tests/master/"
+# base_url <- "https://github.com/GEO511-2021/2021_case_studies-chenqingqing/blob/master/week_01/case_study_01.Rmd"
+# test_url <-  paste0(base_url,"test-CS01.R")
+# setwd(devtools::package_file())
+# if(RCurl::url.exists(test_url)) source(test_url)
+
 setwd(devtools::package_file())
 
-if(RCurl::url.exists(test_url)) source(test_url)
+#full path of test file 
+base_path <- paste0(here::here(), "/week_01/")
+test_file_nm <- list.files(pattern="*.Rmd", path = base_path,  recursive=T)
+full_test_file_path <- paste0(base_path, test_file_nm)
+
+
+#convert Rmd to R script 
+ouput_file <- paste0(base_path, gsub(".Rmd", ".R", test_file_nm))
+knitr::purl(input = full_test_file_path, 
+            output = ouput_file)
+
+testthat::test_that("File source without errors", {
+  expect_output(source(ouput_file))
+})
