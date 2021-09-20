@@ -1,29 +1,30 @@
-## ----setup, include=FALSE---------------------------------------------------------
+## ----setup, include=FALSE------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.width = 10, fig.height = 7)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(Hmisc)
 
 
-## ---------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------
 data(iris)
 head(iris)
 
 
-## ---------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------
 str(iris)
 
 
-## ---------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------
 Hmisc::describe(iris)
 
 
-## ---------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------
 petal_length_mean <- mean(iris$Petal.Length)
 petal_length_mean
 
 
-## ----fig.width=10, fig.height=7---------------------------------------------------
+## ----fig.width=10, fig.height=7------------------------------------------------------------------
 ggplot(iris, aes(Petal.Length)) +
   geom_histogram(fill = "blue", color = "black", alpha = 0.6) + 
   geom_vline(xintercept = petal_length_mean, color = "red", linetype = "longdash", size = 0.8) + 
@@ -36,7 +37,7 @@ ggplot(iris, aes(Petal.Length)) +
   scale_y_continuous(breaks = seq(0, 30, 2))
 
 
-## ----fig.width=10, fig.height=7---------------------------------------------------
+## ----fig.width=10, fig.height=7------------------------------------------------------------------
 ggplot(iris, aes(Petal.Length, fill = Species)) +
   geom_histogram(color = "black",  alpha = 0.6) + 
   labs(x = "Petal Length", y = "Count", title = "Distribution of Petal Length", caption = "Source: iris dataset") + 
@@ -49,7 +50,7 @@ ggplot(iris, aes(Petal.Length, fill = Species)) +
   scale_y_continuous(breaks = seq(0, 30, 2))
 
 
-## ---------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------
 iris %>% 
   dplyr::select(Petal.Length, Species) %>% 
   mutate(name = "Petal Length") %>% 
