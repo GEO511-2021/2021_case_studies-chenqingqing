@@ -1,2 +1,66 @@
+## ----setup, include=FALSE---------------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.width = 10, fig.height = 7)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
+## ---------------------------------------------------------------------------------
 data(iris)
+head(iris)
+
+
+## ---------------------------------------------------------------------------------
+str(iris)
+
+
+## ---------------------------------------------------------------------------------
+Hmisc::describe(iris)
+
+
+## ---------------------------------------------------------------------------------
+petal_length_mean <- mean(iris$Petal.Length)
+petal_length_mean
+
+
+## ----fig.width=10, fig.height=7---------------------------------------------------
+ggplot(iris, aes(Petal.Length)) +
+  geom_histogram(fill = "blue", color = "black", alpha = 0.6) + 
+  geom_vline(xintercept = petal_length_mean, color = "red", linetype = "longdash", size = 0.8) + 
+  annotate("text", x = petal_length_mean + 0.5, y = 27, label = paste0("Mean (", round(petal_length_mean, 2), ")"), size = 4) +
+  labs(x = "Petal Length", y = "Count", title = "Distribution of Petal Length", caption = "Source: iris dataset") + 
+  theme_classic() +
+  theme(axis.text = element_text(size = 10), 
+        title = element_text(size = 12)) +
+  scale_x_continuous(breaks = seq(0, 10, 0.5)) +
+  scale_y_continuous(breaks = seq(0, 30, 2))
+
+
+## ----fig.width=10, fig.height=7---------------------------------------------------
+ggplot(iris, aes(Petal.Length, fill = Species)) +
+  geom_histogram(color = "black",  alpha = 0.6) + 
+  labs(x = "Petal Length", y = "Count", title = "Distribution of Petal Length", caption = "Source: iris dataset") + 
+  facet_grid(Species ~ ., scales = "free") +
+  theme_classic() +
+  theme(axis.text = element_text(size = 10), 
+        title = element_text(size = 12), 
+        legend.position = "none") +
+  scale_x_continuous(breaks = seq(0, 10, 0.5)) +
+  scale_y_continuous(breaks = seq(0, 30, 2))
+
+
+## ---------------------------------------------------------------------------------
+iris %>% 
+  dplyr::select(Petal.Length, Species) %>% 
+  mutate(name = "Petal Length") %>% 
+  ggplot(., aes(x = name, y = Petal.Length)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = Species, shape = Species), size=1, width = 0.4) + 
+  labs(x = "", y = "", title = "Boxplot of Petal Length", caption = "Source: iris dataset") + 
+  coord_flip() +
+  theme_classic() +
+  theme(axis.text = element_text(size = 10), 
+        title = element_text(size = 12), 
+        legend.position = "bottom") +
+  scale_y_continuous(breaks = seq(0, 10, 1))
 
