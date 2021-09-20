@@ -6,8 +6,11 @@
 
 setwd(devtools::package_file())
 
+library(testthat)
+library(here)
+
 #full path of test file 
-base_path <- paste0(here::here(), "/week_01/")
+base_path <- paste0(here(), "/week_01/")
 test_file_nm <- list.files(pattern="*.Rmd", path = base_path,  recursive=T)
 full_test_file_path <- paste0(base_path, test_file_nm)
 
