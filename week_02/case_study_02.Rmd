@@ -19,12 +19,13 @@ library(TTR)
 
 ```{r}
 # define the link to the data - you can try this in your browser too.  Note that the URL ends in .txt.
-dataurl <- "https://data.giss.nasa.gov/tmp/gistemp/STATIONS/tmp_USW00014733_14_0_1/station.txt"
-temp <- read_table(dataurl, 
-                   skip = 2, # skip the first two lines
-                   na = "999.90",
-                   progress = F) %>% 
-  clean_names() 
+# dataurl <- "https://data.giss.nasa.gov/cgi-bin/gistemp/stdata_show_v4.cgi?id=USW00014733&ds=14&dt=1"
+# temp <- read_table(dataurl, 
+#                    skip = 2, # skip the first two lines
+#                    na = "999.90",
+#                    progress = F) %>% 
+#   clean_names() 
+temp <- read_csv(here::here("data/cs2_station.csv")) %>% clean_names() 
 head(temp)
 ```
 
