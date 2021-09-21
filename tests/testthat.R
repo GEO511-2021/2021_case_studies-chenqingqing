@@ -12,7 +12,6 @@ if(length(new.packages)) install.packages(new.packages)
 
 #scans R script(s) and tries to quick-load/install the packages mentioned by library or require functions.
 questionr::qscan(list.files(pattern="*.R",recursive=T), load = TRUE, detail = FALSE)
-# setwd(devtools::package_file())
 
 # source(here::here("tests/testthat/test.R"))
 testthat::test_dir(testthat::test_path(), 
