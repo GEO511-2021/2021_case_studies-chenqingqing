@@ -8,6 +8,7 @@ The detailed steps submitted for each assignments can be found in:
 
   - [week_01/case_study_01.Rmd](week_01/case_study_01.md): Your first script
   - [week_02/case_study_02.Rmd](week_02/case_study_02.md): My grandfather says summers are getting hotter
+  - [week_03/case_study_03.Rmd](week_03/case_study_03.md): Wealth over time
 
 ## Recommendations
 
