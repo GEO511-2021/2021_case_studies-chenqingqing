@@ -1,7 +1,7 @@
 Case Study 02: My grandfather says summers are getting hotter
 ================
 Qingqing Chen
-21 September, 2021
+28 September, 2021
 
 ## Load data
 
@@ -107,10 +107,12 @@ summary(temp)
 ### Create a subset
 
 ``` r
+mean_jja <- mean(temp[which(temp$j_j_a != 999.90), ]$j_j_a)
+
 temp_jja <- temp %>% 
   dplyr::select(year, j_j_a) %>%
   rename(JJA = j_j_a) %>% 
-  mutate(JJA = if_else(is.na(JJA), mean(JJA, na.rm = T), JJA)) %>%
+  mutate(JJA = if_else(JJA == 999.90, mean_jja, JJA)) %>%
   mutate(avg_5year = SMA(JJA, n = 5)) 
 ```
 

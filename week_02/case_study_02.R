@@ -1,4 +1,4 @@
-## ----setup, include=FALSE-------------------------------------------------------------------------
+## ----setup, include=FALSE---------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.width = 10, fig.height = 10)
 library(tidyverse)
 library(janitor)
@@ -6,7 +6,7 @@ library(dplyr)
 library(TTR)
 
 
-## -------------------------------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 # define the link to the data - you can try this in your browser too.  Note that the URL ends in .txt.
 # dataurl <- "https://data.giss.nasa.gov/cgi-bin/gistemp/stdata_show_v4.cgi?id=USW00014733&ds=14&dt=1"
 # temp <- read_table(dataurl, 
@@ -18,21 +18,23 @@ temp <- read_csv(here::here("data/cs2_station.csv")) %>% clean_names()
 head(temp)
 
 
-## -------------------------------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 names(temp)
 glimpse(temp)
 summary(temp)
 
 
-## -------------------------------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
+mean_jja <- mean(temp[which(temp$j_j_a != 999.90), ]$j_j_a)
+
 temp_jja <- temp %>% 
   dplyr::select(year, j_j_a) %>%
   rename(JJA = j_j_a) %>% 
-  mutate(JJA = if_else(is.na(JJA), mean(JJA, na.rm = T), JJA)) %>%
+  mutate(JJA = if_else(JJA == 999.90, mean_jja, JJA)) %>%
   mutate(avg_5year = SMA(JJA, n = 5)) 
 
 
-## -------------------------------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 ggplot(temp_jja) +
   geom_line(aes(x = year, y = JJA, group = 1)) +
   geom_line(aes(x = year, y = avg_5year, group = 1), color = "blue", linetype = 2, lwd = 0.8) +
