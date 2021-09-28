@@ -1,27 +1,15 @@
----
-title: "Case Study 04: Farthest airport from New York City"
-author: "Qingqing Chen"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = T, warning = F, message = F)
 library(dplyr)
 library(nycflights13)
-```
 
 
-## Overview data 
-```{r}
+## ------------------------------------------------------------------------------------------------
 glimpse(flights)
 names(flights)
-```
 
-## Find the farthest airpot 
-```{r}
+
+## ------------------------------------------------------------------------------------------------
 df_sub <- flights %>% 
   dplyr::select(tailnum, flight, origin, dest, distance) %>% # select only needed columns 
   unique() %>% # remove duplicated columns 
@@ -38,6 +26,4 @@ farthest_airport <- df_sub %>%
   select(name) %>% 
   as.character()
 farthest_airport
-```
-
 
