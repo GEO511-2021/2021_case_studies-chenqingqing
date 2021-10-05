@@ -1,14 +1,4 @@
----
-title: "Case Study 05: Beware the Canadians!"
-author: "Qingqing Chen"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
-editor_options: 
-  chunk_output_type: console
----
-
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE----------------------------------------------------------
 knitr::opts_chunk$set(echo = T, warning = F, message = F)
 library(dplyr)
 library(tidyverse)
@@ -16,33 +6,27 @@ library(spData)
 library(sf)
 library(units)
 library(tmap)
-```
 
- 
-## Load data 
-```{r}
+
+## ----------------------------------------------------------------------------------
 #load 'world' data from spData package
 data(world)  
 # load 'states' boundaries from spData package
 data(us_states)
-```
- 
- 
-```{r}
+
+
+## ----------------------------------------------------------------------------------
 #quick view 
 plot(world[1]) 
 plot(us_states[1])
-```
- 
 
-## Reproject spatial data
-```{r}
+
+## ----------------------------------------------------------------------------------
 # check world crs 
 st_crs(world)
-```
- 
-## Spatial intersection 
-```{r}
+
+
+## ----------------------------------------------------------------------------------
 canada_buffer <-  world %>% 
   st_transform(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs") %>% 
   filter(name_long == "Canada") %>% 
@@ -54,33 +38,25 @@ ny <-  us_states %>%
   filter(NAME == "New York")
 
 intersection <- st_intersection(canada_buffer, ny)
-```
 
- 
-## Visualize
 
-```{r}
+## ----------------------------------------------------------------------------------
 # method 1
 tm_shape(ny) +
   tm_borders() +
   tm_shape(intersection) +
   tm_polygons(col = "red")
-```
 
 
-```{r}
+## ----------------------------------------------------------------------------------
 # method 2
 ggplot() +
   geom_sf(data = ny) +
   geom_sf(data = intersection, fill = "red")
-```
 
 
-## Calculate area
-```{r}
+## ----------------------------------------------------------------------------------
 intersection %>% 
   st_area() %>% 
   set_units(km^2)
-```
- 
- 
+
