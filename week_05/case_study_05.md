@@ -1,7 +1,7 @@
 Case Study 05: Beware the Canadians!
 ================
 Qingqing Chen
-05 October, 2021
+07 October, 2021
 
 ## Load data
 
@@ -74,19 +74,20 @@ intersection <- st_intersection(canada_buffer, ny)
 
 ``` r
 # method 1
-tm_shape(ny) +
-  tm_borders() +
-  tm_shape(intersection) +
-  tm_polygons(col = "red")
+ggplot() +
+  geom_sf(data = ny) +
+  geom_sf(data = intersection, fill = "red")
 ```
 
 ![](case_study_05_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 # method 2
-ggplot() +
-  geom_sf(data = ny) +
-  geom_sf(data = intersection, fill = "red")
+tmap_mode("view")
+tm_shape(ny) +
+  tm_borders() +
+  tm_shape(intersection) +
+  tm_polygons(col = "red")
 ```
 
 ![](case_study_05_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->

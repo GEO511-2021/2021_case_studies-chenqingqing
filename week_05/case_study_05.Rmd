@@ -61,18 +61,18 @@ intersection <- st_intersection(canada_buffer, ny)
 
 ```{r}
 # method 1
+ggplot() +
+  geom_sf(data = ny) +
+  geom_sf(data = intersection, fill = "red")
+```
+
+```{r}
+# method 2
+tmap_mode("view")
 tm_shape(ny) +
   tm_borders() +
   tm_shape(intersection) +
   tm_polygons(col = "red")
-```
-
-
-```{r}
-# method 2
-ggplot() +
-  geom_sf(data = ny) +
-  geom_sf(data = intersection, fill = "red")
 ```
 
 
