@@ -49,6 +49,7 @@ attractive places.
 
 An other similar example
 [(source)](https://link.springer.com/article/10.1007/s11783-018-1068-1):
+
 ![](pic/example1-1.png)
 
 ## Example 2

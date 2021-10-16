@@ -32,7 +32,9 @@ The COVID-19 virus has caused unprecedented impacts on people's day-to-day life,
 This graphic is useful to demonstrate how people move around a city. The links between two locations indicate the origin-to-destination networks and the height gives a straightforward sense of where are the most attractive places. [(source)](https://cosmosmagazine.com/science/new-universal-law-of-human-mobility/)
 
 An other similar example [(source)](https://link.springer.com/article/10.1007/s11783-018-1068-1): 
+
 ![](pic/example1-1.png)
+
 
 ## Example 2
 
