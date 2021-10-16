@@ -9,9 +9,9 @@ The detailed steps submitted for each assignments can be found in:
   - [week_01/case_study_01.Rmd](week_01/case_study_01.md): Your first script
   - [week_02/case_study_02.Rmd](week_02/case_study_02.md): My grandfather says summers are getting hotter
   - [week_03/case_study_03.Rmd](week_03/case_study_03.md): Wealth over time
-  - [week_04/case_study_04.Rmd](week_04/case_study_04.md): Beware the Canadians!
-  - [week_05/case_study_05.Rmd](week_05/case_study_05.md): Find hottest country on each continent
-  - [week_06/case_study_06.Rmd](week_06/case_study_06.md): Getting Help!
+  - [week_04/case_study_04.Rmd](week_04/case_study_04.md): Farthest airport from New York City
+  - [week_05/case_study_05.Rmd](week_05/case_study_05.md): Beware the Canadians!
+  - [week_06/case_study_06.Rmd](week_06/case_study_06.md): Find hottest country on each continent
 
 ## Recommendations
 
