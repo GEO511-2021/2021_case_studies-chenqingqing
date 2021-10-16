@@ -81,7 +81,7 @@ tm_shape(sf_tmax) +
 ```
 
 ### The hottest country in each continent
-```{r}
+```{r eval=F}
 sf_tmax %>% 
   st_set_geometry(NULL) %>% 
   group_by(continent) %>% 
@@ -102,4 +102,4 @@ sf_tmax %>%
   )
 ```
 
-
+![](table1.png)
