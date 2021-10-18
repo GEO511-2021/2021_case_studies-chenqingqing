@@ -1,7 +1,7 @@
 Project Proposal
 ================
 Qingqing Chen
-Last compiled date:15 October, 2021
+Last compiled date:18 October, 2021
 
 ## Identifying the Changes of Social Diversity in Auckland City under the COVID-19 Impacts
 
