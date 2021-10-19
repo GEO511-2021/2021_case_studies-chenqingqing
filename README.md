@@ -12,6 +12,7 @@ The detailed steps submitted for each assignments can be found in:
   - [week_04/case_study_04.Rmd](week_04/case_study_04.md): Farthest airport from New York City
   - [week_05/case_study_05.Rmd](week_05/case_study_05.md): Beware the Canadians!
   - [week_06/case_study_06.Rmd](week_06/case_study_06.md): Find hottest country on each continent
+  - [week_07/case_study_07.Rmd](week_07/case_study_07.md): Getting help!
 
 ## Recommendations
 
