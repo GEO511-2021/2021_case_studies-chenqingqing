@@ -1,27 +1,17 @@
----
-title: "Case Study 07: Getting Help!"
-author: "Qingqing Chen"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
-editor_options: 
-  chunk_output_type: console
----
- 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = T, warning = F, message = F)
-library(tidyverse)
-library(reprex)
-library(sf)
-library(spData)
-```
+Case Study 07: Getting Help!
+================
+Qingqing Chen
+19 October, 2021
 
-## Load data 
-```{r}
+## Load data
+
+``` r
 data(world)
 ```
 
 ## Visualization
-```{r}
+
+``` r
 world %>%
   ggplot(., aes(gdpPercap, fill = continent)) +
   geom_density(alpha=0.5, color=F) +
@@ -29,9 +19,11 @@ world %>%
   labs(fill = "Continent", x = "GDP per captita", y = "Density")
 ```
 
+![](case_study_07_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ## Example repex
-```{r eval = F}
+
+``` r
 library(spData)
 library(ggplot2)
 data(world)
@@ -39,6 +31,3 @@ ggplot(world, aes(x = gdpPercap, y = continent, color = continent)) +
   geom_density(alpha=0.5,color=F)
 reprex(venue="gh")
 ```
-
-
-
