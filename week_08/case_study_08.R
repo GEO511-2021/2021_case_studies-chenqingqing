@@ -1,33 +1,15 @@
----
-title: "Case Study 08: One Script, Many Products"
-author: Qingqing Chen
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: 
-  html_document: default
-  # github_document: default
-  # powerpoint_presentation: default
-  # pdf_document: default
-  # word_document: default
-  always_allow_html: true
-editor_options: 
-  chunk_output_type: console
----
- 
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE-------------------------------------------------
 knitr::opts_chunk$set(echo = T, warning = F, message = F)
 library(tidyverse)
 library(kableExtra)
-```
 
-## Load data 
-```{r}
+
+## -------------------------------------------------------------------------
 url <- "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_annmean_mlo.txt"
 df <- read.table(url, col.names = c("year", "mean", "unc"))
-```
 
-## Visualize 
-```{r fig.width=10, fig.height=8}
+
+## ----fig.width=10, fig.height=8-------------------------------------------
 #Use ggplot to plot a time series of CO2 levels through time
 min_year <- df$year %>% min()
 max_year <- df$year %>% max()
@@ -36,19 +18,15 @@ df %>%
   as_tibble() %>% 
   ggplot(., aes(x = year, y = mean)) +
   geom_line(color = "black", lwd = 0.7) +
+  # geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd),
+                # width = 0.4) +
   geom_point(size = 1.5, color = "red") +
   scale_x_continuous(breaks = seq(min_year, max_year, 5)) +
   theme_bw() +
-  labs(x = "Year", y = "Mean", 
-       title= "Trends in Atmospheric Carbon Dioxide")
-```
+  labs(x = "Year", y = "Mean", title= "Trends in Atmospheric Carbon Dioxide")
 
 
-## Creat table
-
-### Method 1
-
-```{r}
+## -------------------------------------------------------------------------
 # statistical summary
 summ <- df %>% 
   slice(-1) %>% 
@@ -66,46 +44,38 @@ summ <- df %>%
                    S.D. = sd(mean), 
                    Min = min(mean), 
                    Max = max(mean)) 
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 # suitable for github doc output
 knitr::kable(summ)
 # %>% as_image(width = 10, file = "table.png")
-```
 
 
-```{r eval=T}
+## -------------------------------------------------------------------------
 # suitable for html output 
 kbl(summ,
   caption = "Mean Mauna Loa CO2 every decade", 
   format = "html", table.attr = "style='width:50%;'") %>%
   kableExtra::kable_styling(bootstrap_options = "striped",
   position = "float_right") 
-```
 
 
-```{r echo=F}
+## ----echo=F---------------------------------------------------------------
 description <- tibble(
   Description = "Data from March 1958 through April 1974 have been obtained by C. David Keeling of the Scripps Institution of Oceanography (SIO) and were obtained from the Scripps website (scrippsco2.ucsd.edu). The estimated uncertainty in the annual mean is the standard deviation of the differences of annual mean values determined independently by NOAA/ESRL and the Scripps Institution of Oceanography. In general, the data presented for the last year are subject to change, depending on recalibration of the reference gas mixtures used, and other quality control procedures. Occasionally, earlier years may also be changed for the same reasons. Usually these changes are minor. CO2 expressed as a mole fraction in dry air, micromol/mol, abbreviated as ppm."
 )
-# gt::gt(description)
-```
+gt::gt(description)
 
 
-### Method 2
-```{r}
+## -------------------------------------------------------------------------
 # suitable for html output
 DT::datatable(summ, 
                 caption = 'Mean Mauna Loa CO2 every decade', 
                 rownames = F,
                 filter = 'top')
-```
 
 
-## Render output files 
-
-```{r eval=F}
-rmarkdown::render("week_08/case_study_08.Rmd", output_format = "all")
-```
+## ----eval=F---------------------------------------------------------------
+## rmarkdown::render("week_08/case_study_08.Rmd",output_format = "all")
 
