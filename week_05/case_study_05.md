@@ -99,6 +99,7 @@ tm_shape(ny) +
 area <- intersection %>% 
   st_area() %>% 
   set_units(km^2)
+
 print(paste("The intersected area (red color) is around", round(area, 2), "km\u00B2"))
 ```
 
