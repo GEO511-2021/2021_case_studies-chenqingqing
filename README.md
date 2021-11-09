@@ -14,6 +14,7 @@ The detailed steps submitted for each assignments can be found in:
   - [week_06/case_study_06.Rmd](week_06/case_study_06.md): Find hottest country on each continent
   - [week_07/case_study_07.Rmd](week_07/case_study_07.md): Getting help!
   - [week_08/case_study_08.Rmd](week_08/case_study_08.md): One Script, Many Products
+  - [week_09/case_study_09.Rmd](week_09/case_study_09.md): Tracking Hurricanes!
 
 ## Recommendations
 
