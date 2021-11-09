@@ -15,5 +15,5 @@ questionr::qscan(list.files(pattern="*.R",recursive=T), load = TRUE, detail = FA
 
 # source(here::here("tests/testthat/test.R"))
 testthat::test_dir(testthat::test_path(), 
-                   stop_on_failure = TRUE, 
+                   stop_on_failure = T, 
                    reporter = "progress")
