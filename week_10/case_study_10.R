@@ -1,13 +1,4 @@
----
-title: "Case Study 10: Satellite Remote Sensing"
-author: Qingqing Chen
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE----------------------------------------------------
 knitr::opts_chunk$set(echo = T, warning = F, message = F)
 library(raster)
 library(rasterVis)
@@ -18,14 +9,9 @@ library(knitr)
 
 # New Packages
 library(ncdf4) # to import data from netcdf format
-```
 
 
-## Land Use Land Cover
-
-### Load data 
-
-```{r}
+## ----------------------------------------------------------------------------
 # Create a folder to hold the downloaded data
 dir.create("data", showWarnings = F) #create a folder to hold the data
 
@@ -39,24 +25,19 @@ download.file(lst_url,destfile = "data/MOD11A2.006_aid0001.nc", mode = "wb")
 # load data 
 lulc <- stack("data/MCD12Q1.051_aid0001.nc",varname="Land_Cover_Type_1")
 lst <- stack("data/MOD11A2.006_aid0001.nc",varname="LST_Day_1km")
-```
 
-### Explore LULC data
 
-```{r}
+## ----------------------------------------------------------------------------
 plot(lulc)
-```
 
 
-```{r}
+## ----------------------------------------------------------------------------
 # pick one year to work with 
 lulc <- lulc[[13]]
 plot(lulc)
-```
 
-### Process landcover data
 
-```{r}
+## ----------------------------------------------------------------------------
 # Assign land cover clases from MODIS website
 Land_Cover_Type_1 <-  c(
     Water = 0, 
@@ -78,10 +59,9 @@ Land_Cover_Type_1 <-  c(
     `Barren/Sparsely vegetated` = 16, 
     Unclassified = 254,
     NoDataFill = 255)
-```
 
 
-```{r}
+## ----------------------------------------------------------------------------
 lcd <- data.frame(
   ID = Land_Cover_Type_1,
   landcover = names(Land_Cover_Type_1),
@@ -89,10 +69,9 @@ lcd <- data.frame(
   stringsAsFactors = F)
 # colors from https://lpdaac.usgs.gov/about/news_archive/modisterra_land_cover_types_yearly_l3_global_005deg_cmg_mod12c1
 kable(head(lcd))
-```
 
 
-```{r}
+## ----------------------------------------------------------------------------
 # Convert LULC raster into a ‘factor’ (categorical) raster. 
 # This requires building the Raster Attribute Table (RAT). 
 # convert to raster (easy)
@@ -110,25 +89,19 @@ gplot(lulc) +
   coord_equal() +
   theme(legend.position = "bottom")+
   guides(fill = guide_legend(ncol = 5, nrow = 3, byrow = TRUE))
-```
 
-## Land Surface Temperature
 
-```{r}
+## ----------------------------------------------------------------------------
 plot(lst[[1:12]])
-```
 
-### Convert LST to Degrees 
 
-```{r}
+## ----------------------------------------------------------------------------
 # offs(): Gain and offset of values on file
 offs(lst) <-  -273.15
 plot(lst[[1:10]])
-```
 
-### Add Dates to Z (time) dimension
 
-```{r}
+## ----------------------------------------------------------------------------
 # The default layer names of the LST file include the date as follows
 names(lst)[1:5]
 
@@ -139,10 +112,9 @@ tdates <- names(lst) %>%
 
 names(lst) <- 1:nlayers(lst)
 lst <- setZ(lst, tdates) # Get or set z-values
-```
 
-### Extract timeseries for a point
-```{r}
+
+## ----------------------------------------------------------------------------
 lw <- SpatialPoints(data.frame(x = -78.791547, y = 43.007211))
 projection(lw) <- "+proj=longlat"
 lw <- lw %>% spTransform(CRSobj = crs(lst))
@@ -160,11 +132,9 @@ lw_data %>%
   geom_line(color = "blue") +
   geom_smooth(n = 300, span = 0.01) +
   theme_bw()
-```
 
 
-### Summarize weekly data to monthly climatologies
-```{r}
+## ----------------------------------------------------------------------------
 tmonth <- as.numeric(format(getZ(lst),"%m"))
 lst_month <- stackApply(lst, tmonth, fun = mean)
 names(lst_month) <-  month.name
@@ -176,13 +146,11 @@ gplot(lst_month) +
   scale_fill_gradient(low = 'blue', high = 'orange') +
   # coord_equal() +
   coord_sf(datum = NA) 
-```
 
 
-```{r}
+## ----------------------------------------------------------------------------
 cellStats(lst_month, mean) %>% 
   as.data.frame() %>% 
   rename(Mean = ".") %>% 
   kable()
-```
 
