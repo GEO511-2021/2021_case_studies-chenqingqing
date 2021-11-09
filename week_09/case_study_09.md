@@ -1,7 +1,7 @@
 Case Study 09: Tracking Hurricanes!
 ================
 Qingqing Chen
-02 November, 2021
+09 November, 2021
 
 ## Load data
 
