@@ -1,13 +1,4 @@
----
-title: "Case Study 11: Parallel Computing with R"
-author: Qingqing Chen
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE---------------------------------
 knitr::opts_chunk$set(echo = T, warning = F, message = F, cache = T)
 library(tidyverse)
 library(spData)
@@ -23,11 +14,9 @@ getDoParWorkers() # check registered cores
 library(tidycensus)
 # census API key can be obtained from: http://api.census.gov/data/key_signup.html
 # census_api_key("YOUR API KEY GOES HERE", install = TRUE)
-```
 
 
-## Load data 
-```{r}
+## ---------------------------------------------------------
 racevars <- c(White = "P005003", 
               Black = "P005004", 
               Asian = "P005006", 
@@ -37,20 +26,16 @@ erie <- get_decennial(geography = "block", variables = racevars,
                       state = "NY", county = "Erie County", geometry = TRUE,
                       summary_var = "P001001", cache_table=T) 
 head(erie)
-```
 
-## Crop the county-level data
 
-```{r}
+## ---------------------------------------------------------
 bbox <- c(xmin=-78.9, xmax=-78.85, ymin=42.888, ymax=42.92)
 erie_sub <- st_crop(erie, bbox)
 head(erie_sub)
 print(paste0("The number of features reduced from ", nrow(erie), " to ", nrow(erie_sub), "!"))
-```
 
-## Parallel computing
 
-```{r}
+## ---------------------------------------------------------
 generate_points <- function(df, r){
   df %>%  # df is the reduced enri dataset
     filter(., variable==r) %>%  # filter by race
@@ -66,11 +51,9 @@ if(file.exists(here("data/new_erie_sub.rds"))){
   new_erie_sub <- foreach(r=unique(erie_sub$variable),.combine=rbind) %dopar% {generate_points(erie_sub, r)}
   saveRDS(new_erie_sub, here::here("data/new_erie_sub.rds"))
 }
-```
 
-## Visualize
 
-```{r fig.width=10, fig.height=10}
+## ----fig.width=10, fig.height=10--------------------------
 cntr_crds <- c(mean(bbox[1:2]), mean(bbox[3:4]))
 m <- mapview(new_erie_sub, 
         zcol = "variable", 
@@ -79,5 +62,4 @@ m <- mapview(new_erie_sub,
         layer.name = "Race") 
 m@map %>% 
   leaflet::setView(., cntr_crds[1], cntr_crds[2], zoom = 14.5)
-```
 
