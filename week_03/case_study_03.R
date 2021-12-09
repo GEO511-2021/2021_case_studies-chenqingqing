@@ -1,1 +1,44 @@
- 
+## ----setup, include=FALSE--------------------------------------------
+knitr::opts_chunk$set(echo = T, warning = F, message = F, fig.width = 12, fig.height = 8)
+library(dplyr)
+library(ggplot2)
+library(gapminder)
+library(here)
+
+
+## --------------------------------------------------------------------
+data(gapminder)
+df_sub <- gapminder %>% 
+  filter(country != "Kuwait")
+
+head(df_sub)
+glimpse(df_sub)
+
+
+## --------------------------------------------------------------------
+ggplot(df_sub) +
+  geom_point(aes(x = lifeExp, y = gdpPercap, size=pop/100000, color = continent)) + 
+  facet_wrap(~year, nrow = 1) +
+  scale_y_sqrt() +  # similar to scale_y_continuous(trans = "sqrt") 
+  theme_bw() + 
+  labs(x = "Life Expectancy", y = "GDP per capita", size = "Population (100k)", color = "Continent", 
+       title = "Weather and life expectancy through time")
+ggsave(here::here("week_03/plot1.png"), device = "png", width = 15)
+
+
+## --------------------------------------------------------------------
+gapminder_continent <- df_sub %>% 
+  group_by(continent, year) %>% 
+  dplyr::summarise(gdpPercapweighted = weighted.mean(x = gdpPercap, w = pop), 
+                   pop = sum(as.numeric(pop)))
+
+ggplot(df_sub) +
+  geom_line(aes(x = year, y = gdpPercap, color = continent, group = country)) +
+  geom_point(aes(x = year, y = gdpPercap, color = continent, group = country)) +
+  geom_point(data = gapminder_continent, aes(x = year, y = gdpPercapweighted, size = pop/100000)) + 
+  geom_line(data = gapminder_continent, aes(x = year, y = gdpPercapweighted)) +
+  facet_wrap(~continent, nrow = 1) +
+  theme_bw() + 
+  labs(x = "Year", y = "GDP per capita", size = "Population (100k)", color = "Continent")
+ggsave(here::here("week_03/plot2.png"), device = "png", width = 15)
+

@@ -1,22 +1,43 @@
 ---
-title: "Case Study 04"
-author: Your Name
-date: August 1, 2020
+title: "Case Study 04: Farthest airport from New York City"
+author: "Qingqing Chen"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
-## First Header
-
-Comments
-
-```{r}
-summary(cars)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+library(dplyr)
+library(nycflights13)
 ```
 
-## Second Header
 
-Comments
-
+## Overview data 
 ```{r}
-plot(pressure)
+glimpse(flights)
+names(flights)
 ```
+
+## Find the farthest airpot 
+```{r}
+df_sub <- flights %>% 
+  dplyr::select(tailnum, flight, origin, dest, distance) %>% # select only needed columns 
+  unique() %>% # remove duplicated columns 
+  arrange(desc(distance)) %>% # arrange the distance 
+  slice(1) %>%  # get the farest distance 
+  left_join(., airports, c("dest" = "faa")) # join airpots to find the full airpot name
+
+# solution 1
+farthest_airport <- df_sub %>% pull(name)
+farthest_airport
+
+# solution 2
+farthest_airport <- df_sub %>% 
+  select(name) %>% 
+  as.character()
+farthest_airport
+```
+
+

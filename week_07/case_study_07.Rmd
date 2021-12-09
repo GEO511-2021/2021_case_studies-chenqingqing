@@ -1,7 +1,44 @@
 ---
-title: "Case Study 07"
-author: Your Name
-date: August 1, 2020
+title: "Case Study 07: Getting Help!"
+author: "Qingqing Chen"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+library(tidyverse)
+library(reprex)
+library(sf)
+library(spData)
+```
+
+## Load data 
+```{r}
+data(world)
+```
+
+## Visualization
+```{r}
+world %>%
+  ggplot(., aes(gdpPercap, fill = continent)) +
+  geom_density(alpha=0.5, color=F) +
+  theme(legend.position = "bottom") +
+  labs(fill = "Continent", x = "GDP per captita", y = "Density")
+```
+
+
+## Example repex
+```{r eval = F}
+library(spData)
+library(ggplot2)
+data(world)
+ggplot(world, aes(x = gdpPercap, y = continent, color = continent)) +
+  geom_density(alpha=0.5,color=F)
+reprex(venue="gh")
+```
+
+
+
