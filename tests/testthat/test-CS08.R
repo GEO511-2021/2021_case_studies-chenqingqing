@@ -17,6 +17,8 @@ ouput_file <- paste0(base_path, gsub(".Rmd", ".R", test_file_nm))
 knitr::purl(input = full_test_file_path, 
             output = ouput_file)
 
-testthat::test_that("File source without errors", {
-  expect_output(source(ouput_file))
-})
+source(ouput_file)
+# testthat::test_that("File source without errors", {
+#   auto_test(source(ouput_file))
+#   # expect_output(source(ouput_file))
+# })
